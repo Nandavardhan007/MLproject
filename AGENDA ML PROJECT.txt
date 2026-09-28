@@ -1,0 +1,21 @@
+AGENDA ML PROJECT
+1.CREATE A ENVIORNOMENT FOR THE PROJECT
+ 	1.**conda create -p venv python==3.12 -y  "TO CREATE A ENV"
+	 **To activate this environment, use                                                                              
+	$ conda activate C:\MLOPS\mlproject\venv  
+ 	**To deactivate an active environment, use                                                                       
+	$ conda deactivate
+
+	TO push the project file into the GitHub using git functions
+	**initialize the git first : git init
+	2.setup .py
+	3. requirements.txt
+
+2. src folder and building packages
+3.createv setup.py environment 
+3.created logger and exceptions 
+4.
+
+
+
+
