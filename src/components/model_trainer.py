@@ -42,26 +42,7 @@ class ModelTrainer:
                 "Gradient Boosting Regressor": GradientBoostingRegressor(),
             }
             
-        #     model_report:dict=evaluate_models(X_train=X_train,y_train=y_train,X_test=X_test,y_test=y_test,models=models)
-            
-        #     #best model score 
-        #     best_models_score = max(sorted(model_report.keys()))
-        #     #best model name 
-        #     best_model_name = list(model_report.keys())[list(model_report.values()).index(best_models_score)]
-        #     best_model = models[best_model_name]
-            
-        #     if best_models_score < 0.6:
-        #         raise CustomExcpetion("no best model found")
-        #     logging.info("The best model from the training and testing dataset") 
-            
-        #     save_object(file_path=self.model_trainer_config.trained_model_file_path,
-        #                 obj = best_model)
-            
-        #     predicted = best_model.predict(X_test)
-        #     r2_score_ = r2_score(y_test,predicted)
-        #     return r2_score_
-        # except Exception as e :
-        #     raise CustomExcpetion(e,sys)
+
             model_report: dict = evaluate_models(
                 X_train=X_train,
                 y_train=y_train,
@@ -111,7 +92,7 @@ class ModelTrainer:
                 f"Final R2 score: {r2_score_}"
             )
 
-            return r2_score_
+            return r2_score_,best_model
         except Exception as e :
             raise CustomExcpetion(e,sys)
         
