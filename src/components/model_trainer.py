@@ -41,14 +41,59 @@ class ModelTrainer:
                 "Random Forest Regressor": RandomForestRegressor(),
                 "Gradient Boosting Regressor": GradientBoostingRegressor(),
             }
-            
+            model_params = {
+                "Linear Regression": {
+                    "fit_intercept": True,
+                    "copy_X": True,
+                    "positive": False,
+                    "n_jobs": None,
+                },
+                "K-Neighbors Regressor": {
+                    "n_neighbors": 5,
+                    "weights": "uniform",
+                    "algorithm": "auto",
+                    "p": 2,
+                },
+                "Decision Tree": {
+                    "criterion": "squared_error",
+                    "max_depth": 8,
+                    "min_samples_split": 2,
+                    "min_samples_leaf": 1,
+                },
+                "XGBoost Regressor": {
+                    "n_estimators": 100,
+                    "learning_rate": 0.1,
+                    "max_depth": 5,
+                    "subsample": 0.8,
+                },
+                "AdaBoost Regressor": {
+                    "n_estimators": 50,
+                    "learning_rate": 1.0,
+                    "loss": "linear",
+                    "random_state": 42,
+                },
+                "Random Forest Regressor": {
+                    "n_estimators": 100,
+                    "max_depth": None,
+                    "min_samples_split": 2,
+                    "random_state": 42,
+                },
+                "Gradient Boosting Regressor": {
+                    "n_estimators": 100,
+                    "learning_rate": 0.1,
+                    "max_depth": 3,
+                    "subsample": 1.0,
+                },
+            }
+
 
             model_report: dict = evaluate_models(
                 X_train=X_train,
                 y_train=y_train,
                 X_test=X_test,
                 y_test=y_test,
-                models=models
+                models=models,
+                params = model_params
             )
 
             logging.info(f"Model report: {model_report}")
