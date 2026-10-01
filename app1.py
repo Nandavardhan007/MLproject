@@ -13,11 +13,12 @@ app = application
 def index():
     return render_template("index.html")
 
-@app.route("/predict_datapoint",methods=['GET','POST'])
+@app.route("/predict",methods=['GET','POST'])
 def predicted_datapoint():
     if request.method == "GET":
-        return render_template('home.html')
+        return render_template('new.html')
     else:
+        form_data = request.form.to_dict()
         data = Customdata(
             gender=request.form.get('gender'),
             race_ethnicity=request.form.get("race_ethnicity"),
@@ -33,7 +34,7 @@ def predicted_datapoint():
         
         predict_pipeline = PredictPipeline()
         results = predict_pipeline.predict(pred_df)
-        return render_template("home.html", results=results[0])
+        return render_template("new.html", results=results[0],form=form_data)
     
 
 if __name__ == "__main__":

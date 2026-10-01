@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Exam Performance Indicator</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #6a3093 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+            color: #333;
+        }
+
+        .login {
+            background: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+            padding: 40px;
+            width: 100%;
+            max-width: 620px;
+        }
+
+        .login h1 {
+            text-align: center;
+            font-size: 26px;
+            color: #1e3c72;
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+        }
+
+        .login h1 + h1 {
+            font-size: 16px;
+            font-weight: 500;
+            color: #6a3093;
+            text-align: center;
+            margin-bottom: 28px;
+            padding-bottom: 18px;
+            border-bottom: 2px solid #eee;
+        }
+
+        .mb-3 {
+            margin-bottom: 18px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-label {
+            font-size: 14px;
+            font-weight: 600;
+            color: #444;
+            margin-bottom: 6px;
+            letter-spacing: 0.3px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 11px 14px;
+            font-size: 14px;
+            border: 1.5px solid #d0d7de;
+            border-radius: 8px;
+            background: #f9fafb;
+            transition: all 0.2s ease;
+            font-family: inherit;
+            color: #222;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #2a5298;
+            background: #fff;
+            box-shadow: 0 0 0 4px rgba(42, 82, 152, 0.12);
+        }
+
+        select.form-control {
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236a3093' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            background-size: 16px;
+            padding-right: 38px;
+        }
+
+        .placeholder {
+            color: #9ca3af;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 13px 20px;
+            font-size: 15px;
+            font-weight: 600;
+            letter-spacing: 0.4px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            background: linear-gradient(135deg, #2a5298 0%, #6a3093 100%);
+            color: #fff;
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(42, 82, 152, 0.35);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+            box-shadow: 0 4px 10px rgba(42, 82, 152, 0.3);
+        }
+
+        .result-box {
+            margin-top: 24px;
+            padding: 18px 20px;
+            background: linear-gradient(135deg, #eef2ff 0%, #f5e9ff 100%);
+            border-left: 5px solid #6a3093;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 16px;
+            color: #1e3c72;
+            font-weight: 500;
+        }
+
+        .result-box strong {
+            color: #6a3093;
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="login">
+        <h1>Student Exam Performance Indicator</h1>
+        <h1>Student Exam Performance Prediction</h1>
+
+        <form action="{{ url_for('predicted_datapoint') }}" method="post">
+
+            <div class="mb-3">
+                <label class="form-label">Gender</label>
+                <select class="form-control" name="gender" required>
+                    <option class="placeholder" value="" {% if not form or not form.gender %}selected{% endif %} disabled>Select your Gender</option>
+                    <option value="male" {% if form and form.gender == 'male' %}selected{% endif %}>Male</option>
+                    <option value="female" {% if form and form.gender == 'female' %}selected{% endif %}>Female</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Race or Ethnicity</label>
+                <select class="form-control" name="ethnicity" required>
+                    <option class="placeholder" value="" {% if not form or not form.ethnicity %}selected{% endif %} disabled>Select Ethnicity</option>
+                    <option value="group A" {% if form and form.ethnicity == 'group A' %}selected{% endif %}>Group A</option>
+                    <option value="group B" {% if form and form.ethnicity == 'group B' %}selected{% endif %}>Group B</option>
+                    <option value="group C" {% if form and form.ethnicity == 'group C' %}selected{% endif %}>Group C</option>
+                    <option value="group D" {% if form and form.ethnicity == 'group D' %}selected{% endif %}>Group D</option>
+                    <option value="group E" {% if form and form.ethnicity == 'group E' %}selected{% endif %}>Group E</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Parental Level of Education</label>
+                <select class="form-control" name="parental_level_of_education" required>
+                    <option class="placeholder" value="" {% if not form or not form.parental_level_of_education %}selected{% endif %} disabled>Select Parent Education</option>
+                    <option value="associate's degree" {% if form and form.parental_level_of_education == "associate's degree" %}selected{% endif %}>associate's degree</option>
+                    <option value="bachelor's degree" {% if form and form.parental_level_of_education == "bachelor's degree" %}selected{% endif %}>bachelor's degree</option>
+                    <option value="high school" {% if form and form.parental_level_of_education == 'high school' %}selected{% endif %}>high school</option>
+                    <option value="master's degree" {% if form and form.parental_level_of_education == "master's degree" %}selected{% endif %}>master's degree</option>
+                    <option value="some college" {% if form and form.parental_level_of_education == 'some college' %}selected{% endif %}>some college</option>
+                    <option value="some high school" {% if form and form.parental_level_of_education == 'some high school' %}selected{% endif %}>some high school</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Lunch Type</label>
+                <select class="form-control" name="lunch" required>
+                    <option class="placeholder" value="" {% if not form or not form.lunch %}selected{% endif %} disabled>Select Lunch Type</option>
+                    <option value="free/reduced" {% if form and form.lunch == 'free/reduced' %}selected{% endif %}>free/reduced</option>
+                    <option value="standard" {% if form and form.lunch == 'standard' %}selected{% endif %}>standard</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Test Preparation Course</label>
+                <select class="form-control" name="test_preparation_course" required>
+                    <option class="placeholder" value="" {% if not form or not form.test_preparation_course %}selected{% endif %} disabled>Select Test Course</option>
+                    <option value="none" {% if form and form.test_preparation_course == 'none' %}selected{% endif %}>None</option>
+                    <option value="completed" {% if form and form.test_preparation_course == 'completed' %}selected{% endif %}>Completed</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Writing Score (out of 100)</label>
+                <input class="form-control" type="number" name="writing_score"
+                       placeholder="Enter your Writing score" min="0" max="100"
+                       value="{{ form.writing_score if form else '' }}" required />
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Reading Score (out of 100)</label>
+                <input class="form-control" type="number" name="reading_score"
+                       placeholder="Enter your Reading score" min="0" max="100"
+                       value="{{ form.reading_score if form else '' }}" required />
+            </div>
+
+            <div class="mb-3">
+                <input class="btn" type="submit" value="Predict your Maths Score" />
+            </div>
+        </form>
+
+        {% if results is not none %}
+        <div class="result-box">
+            The predicted Maths score is <strong>{{ results }}</strong>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
